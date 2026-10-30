@@ -16,6 +16,13 @@ document.addEventListener('DOMContentLoaded', () => {
   darkModeToggle?.addEventListener('click', () => {
     html.classList.toggle('dark');
     localStorage.setItem('pureflow-dark', html.classList.contains('dark'));
+
+    if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      darkModeToggle.animate(
+        [{ transform: 'rotate(0deg)' }, { transform: 'rotate(360deg)' }],
+        { duration: 500, easing: 'ease-in-out' }
+      );
+    }
   });
 
   const replayBtn = document.getElementById('replayBtn');
@@ -42,7 +49,6 @@ document.addEventListener('DOMContentLoaded', () => {
       introTimeline = gsap.timeline({ defaults: { duration: 0.55, ease: 'power2.out' } });
       introTimeline
         .from('.brand', { y: -24, opacity: 0 })
-        .from('.nav-link', { y: -16, opacity: 0, stagger: 0.1 }, '-=0.3')
         .from('.hero-copy h1', { y: 24, opacity: 0 })
         .from('.hero-copy p', { y: 16, opacity: 0 }, '-=0.3')
         .from('.cta-row > *', { y: 16, opacity: 0, stagger: 0.1 }, '-=0.3');
